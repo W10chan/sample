@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map Search</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQI8ffLMurjcvc4LoTK9jLK6Txwx9_hhg&callback=initMap" async defer></script>
+
+    <style>
+        #map{
+            height: 400px;
+            width: 200%;
+        }
+        </style>
+        </head>
+        <body>
+            <h1>場所検索アプリ</h1>
+            <h4>調べたい場所を入力してください</h4>
+        <input type="search" id = "place" placeholder="例．富士山">
+        <button onclick="showMap()">検索</button>
+        <div id="map"></div>
+        <script>
+            function showMap(){
+                var geocoder = new google.maps.Geocoder();
+                var address = document.getElementById("place").value;
+
+                geocoder.geocode({ address: address }, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        var map = new google.maps.Map(document.getElementById("map"), {
+                        center: results[0].geometry.location,
+            zoom: 14
+            });
+
+            new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+            });
+        } else {
+            alert("Geocode was not successful for the following reason: " + status);
+        }
+    });
+    }
+    </script>
+    </body>
+</html>
